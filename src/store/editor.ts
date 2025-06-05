@@ -1,14 +1,9 @@
 import { v4 as uuidv4 } from 'uuid';
 import { Module } from 'vuex';
 import { GlobalDataProps } from './index';
+import { CommonProps, ComponentData } from '../types/props';
 
 // 组件信息
-interface ComponentData {
-  props: { [key: string]: unknown };
-  id: string; // 组件id，独一无二，通过 uuid 生成
-  name: string; // 组件名称
-  isLocked?: boolean; // 是否锁定
-}
 
 export interface EditorProps {
   components: ComponentData[];
@@ -44,6 +39,9 @@ export const testComponents: ComponentData[] = [
       fontSize: '16px',
       color: 'red',
       textAlign: 'center',
+      fontWeight: 'bold',
+      actionType: 'url',
+      url: 'https://www.baidu.com',
     },
   },
 ];
@@ -52,5 +50,25 @@ export const editor: Module<EditorProps, GlobalDataProps> = {
   state: {
     components: testComponents,
     currentElement: '',
+  },
+  mutations: {
+    addComponent(state, props: Readonly<Partial<CommonProps>>) {
+      const newComponent: ComponentData = {
+        id: uuidv4(),
+        name: 'l-text',
+        props: props,
+      };
+      state.components.push(newComponent);
+    },
+    setActive(state, currentId: string) {
+      state.currentElement = currentId;
+    },
+  },
+  getters: {
+    getCurrentElement(state) {
+      return state.components.find(
+        (component) => component.id === state.currentElement,
+      );
+    },
   },
 };

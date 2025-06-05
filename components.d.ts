@@ -12,6 +12,8 @@ declare module 'vue' {
     ALayoutContent: typeof import('ant-design-vue/es')['LayoutContent']
     ALayoutHeader: typeof import('ant-design-vue/es')['LayoutHeader']
     ALayoutSider: typeof import('ant-design-vue/es')['LayoutSider']
+    ComponentList: typeof import('./src/components/ComponentList.vue')['default']
+    EditWrapper: typeof import('./src/components/EditWrapper.vue')['default']
     LText: typeof import('./src/components/LText.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

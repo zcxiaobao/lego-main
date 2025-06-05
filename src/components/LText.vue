@@ -1,26 +1,27 @@
 <template>
-    <component :is="props.tag" :style="styleProps" class="l-text-component">
+    <component :is="props.tag" :style="styleProps" class="l-text-component" @click="handleClick">
         {{ props.text }}
     </component>
 </template>
 <script setup lang="ts">
-import { pick } from 'lodash'
-interface TextProps {
-    text: string,
-    fontSize: string,
-    color: string,
-    tag: string,
-    textAlign: string,
-}
-const props = withDefaults(defineProps<TextProps>(), {
-    text: 'hello',
-    fontSize: '16px',
-    color: '#000',
-    tag: 'div',
-    textAlign: 'center',
-})
+import useStylePick from '../hooks/useStylePick'
+import useComponentClick from '../hooks/useComponentClick'
+import { textDefaultProps } from '../defaultProps'
+import type { TextProps } from '../types/props'
 
-const styleProps = computed(() => pick(props, ['fontSize', 'textAlign', 'color']))
+
+const props = withDefaults(
+    defineProps<Partial<TextProps & { tag: string }>>(),
+    {
+        tag: 'div',
+        ...textDefaultProps,
+    },
+)
+
+const { handleClick } = useComponentClick(props)
+
+
+const styleProps = useStylePick(props)
 </script>
 
 <style scoped>
@@ -37,5 +38,6 @@ button.l-text-component {
 .l-text-component {
     box-sizing: border-box;
     white-space: pre-wrap;
+    position: relative !important;
 }
 </style>

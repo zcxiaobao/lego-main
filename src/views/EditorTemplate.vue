@@ -6,7 +6,7 @@
     </a-layout>
     <a-layout>
         <a-layout-sider width="300" style="background: #fff">
-
+            <component-list @addItem="addComponent" />
         </a-layout-sider>
         <a-layout style="padding: 0 24px 24px">
             <a-layout-content class="preview-container">
@@ -15,28 +15,37 @@
                     <history-area></history-area>
                     <div class="preview-list" id="canvas-area">
                         <div class="body-container">
-                            <component v-for="item in components" :key="item.id" v-bind="item.props" :is="item.name">
-                            </component>
+                            <edit-wrapper v-for="component in components" :key="component.id" @setActive="setActive"
+                                :id="component.id" :active="component.id === currentElement?.id">
+                                <component v-bind="component.props" :is="component.name"></component>
+                            </edit-wrapper>
                         </div>
                     </div>
                 </a-layout-content>
             </a-layout-content>
         </a-layout>
         <a-layout-sider width="300" style="background: #fff" class="settings-panel">
-
+            组件属性
+            <pre>{{ currentElement?.props }}</pre>
         </a-layout-sider>
     </a-layout>
 </template>
 <script setup lang="ts">
 import { useStore } from 'vuex';
 import { GlobalDataProps } from '../store';
-
+import { TextProps, ComponentData } from '../types/props';
 
 const store = useStore<GlobalDataProps>();
 const components = computed(() => store.state.editor.components);
-console.log(components.value);
-// const components = computed(() => editor.value.components);
-// const currentElement = computed(() => editor.value.currentElement);
+const currentElement = computed<ComponentData | null>(() => store.getters.getCurrentElement);
+
+const addComponent = (item: Readonly<Partial<TextProps>>) => {
+    store.commit('addComponent', item)
+    console.log(components.value, 1111)
+}
+const setActive = (id: string) => {
+    store.commit('setActive', id)
+}
 </script>
 <style scoped>
 .header {
