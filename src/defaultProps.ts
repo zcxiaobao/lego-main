@@ -34,7 +34,7 @@ export const textDefaultProps: TextProps = {
   text: 'hello',
   fontSize: '14px',
   fontFamily: '',
-  fontWeight: 'normal',
+  fontWeight: 400,
   fontStyle: 'normal',
   textDecoration: 'none',
   lineHeight: '1',

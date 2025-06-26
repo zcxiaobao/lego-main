@@ -15,6 +15,13 @@ export default defineConfig({
       },
     ],
   },
+  resolve: {
+    extensions: ['.js', '.jsx', '.vue', '.ts', '.tsx', '.mjs', '.json'],
+    alias: {
+      '@': './src',
+      '@assets': './src/assets',
+    },
+  },
   tools: {
     rspack: {
       plugins: [

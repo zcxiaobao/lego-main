@@ -27,7 +27,7 @@ export type TextProps = {
   text: string;
   fontSize: string;
   fontFamily: string;
-  fontWeight: string;
+  fontWeight: number;
   fontStyle: string;
   textDecoration: string;
   lineHeight: string;

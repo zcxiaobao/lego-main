@@ -1,18 +1,22 @@
 <template>
-  <div class="edit-wrapper" @click="itemClick(props.id)" :class="{ active: active }">
+  <div class="edit-wrapper" @click="itemClick(props.id)" :class="{ active: active }" :style="styleProps">
     <slot></slot>
   </div>
 </template>
 
 <script setup lang="ts">
+import useStylePick from '../hooks/useStylePick'
 const props = defineProps<{
   id: string,
-  active: boolean
+  active: boolean,
+  props: object
 }>()
 const emits = defineEmits(['set-active'])
 const itemClick = (id: string) => {
   emits('set-active', id)
 }
+
+const styleProps = useStylePick(props.props || {}, ['position', 'left', 'top', 'width', 'height']) as any
 </script>
 
 <style scoped>

@@ -6,6 +6,8 @@
 <script setup lang="ts">
 import useStylePick from '../hooks/useStylePick'
 import useComponentClick from '../hooks/useComponentClick'
+
+import { without } from 'lodash'
 import { textDefaultProps } from '../defaultProps'
 import type { TextProps } from '../types/props'
 
@@ -21,7 +23,7 @@ const props = withDefaults(
 const { handleClick } = useComponentClick(props)
 
 
-const styleProps = useStylePick(props)
+const styleProps = useStylePick(props, without(Object.keys(props), 'height', 'position', 'left', 'top', 'width'))
 </script>
 
 <style scoped>
